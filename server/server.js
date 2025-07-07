@@ -32,7 +32,8 @@ const io = new Server(server, {
 // socket.on('send_message') is handled in ./socket/index.js
 // User authentication and joining logic handled in ./socket/index.js
 // socket.on('user_join') is used for tracking usernames
-
+// Private messaging events such as 'private_message' and 'direct_message'
+// are handled in ./socket/index.js or related socket controllers
 const setupSocket = require('./socket');
 setupSocket(io);
 
