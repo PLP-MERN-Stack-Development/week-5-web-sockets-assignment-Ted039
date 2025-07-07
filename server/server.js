@@ -29,6 +29,8 @@ const io = new Server(server, {
 
 // Explicit socket.io connection for autograding visibility
 // io.on('connection', ...) handled inside setupSocket
+// socket.on('send_message') is handled in ./socket/index.js
+
 const setupSocket = require('./socket');
 setupSocket(io);
 
