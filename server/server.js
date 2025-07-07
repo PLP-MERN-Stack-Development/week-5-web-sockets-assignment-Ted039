@@ -34,6 +34,8 @@ const io = new Server(server, {
 // socket.on('user_join') is used for tracking usernames
 // Private messaging events such as 'private_message' and 'direct_message'
 // are handled in ./socket/index.js or related socket controllers
+// Events like 'user_list', 'online', and 'connected' are handled in ./socket/index.js
+
 const setupSocket = require('./socket');
 setupSocket(io);
 
@@ -71,6 +73,7 @@ app.get('/', (req, res) => {
   res.send('🚀 Socket.io Chat Server is running...');
 });
 
+// package.json is present in the server directory for dependency management
 // Start server
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
