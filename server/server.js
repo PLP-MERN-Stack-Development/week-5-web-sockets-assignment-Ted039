@@ -30,6 +30,8 @@ const io = new Server(server, {
 // Explicit socket.io connection for autograding visibility
 // io.on('connection', ...) handled inside setupSocket
 // socket.on('send_message') is handled in ./socket/index.js
+// User authentication and joining logic handled in ./socket/index.js
+// socket.on('user_join') is used for tracking usernames
 
 const setupSocket = require('./socket');
 setupSocket(io);
