@@ -1,0 +1,61 @@
+name: Classroom Autograding
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  autograding:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 🧪 Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📦 Install server dependencies
+        working-directory: ./server
+        run: npm install
+
+      - name: 📦 Install client dependencies
+        working-directory: ./client
+        run: npm install
+
+      - name: ✅ Check if server.js exists
+        run: test -f server/server.js
+
+      - name: ✅ Check for Socket.io server setup
+        run: grep -q "socket.io" server/server.js && grep -q "new Server" server/server.js
+
+      - name: ✅ Check for connection event handler
+        run: grep -q "io.on('connection'" server/server.js
+
+      - name: ✅ Check for message event handler
+        run: grep -E "socket.on\(['\"](send_message|message)['\"]" server/server.js
+
+      - name: ✅ Check if client socket setup exists
+        run: test -f client/src/socket/socket.js || grep -r "socket.io-client" client/src/
+
+      - name: ✅ Check for React components folder
+        run: test -d client/src/components
+
+      - name: ✅ Check for user authentication events
+        run: grep -E "user_join|login|auth|username" server/server.js
+
+      - name: ✅ Check for typing indicator logic
+        run: grep -r "typing" server/
+
+      - name: ✅ Check for private messaging logic
+        run: grep -E "private_message|direct_message" server/server.js
+
+      - name: ✅ Check for online status tracking
+        run: grep -E "user_list|connected|online" server/server.js
+
+      - name: ✅ Check for package.json files
+        run: test -f server/package.json && test -f client/package.json
